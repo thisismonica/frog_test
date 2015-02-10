@@ -1,0 +1,68 @@
+version: 1
+creator: klee
+pid: 1007
+cmd: divide_zero-1.o
+
+
+positions: instr line
+event: Icov : CoveredInstructions
+event: Forks : Forks
+event: Ireal : InstructionRealTimes
+event: Itime : InstructionTimes
+event: I : Instructions
+event: UCdist : MinDistToUncovered
+event: Rtime : ResolveTime
+event: States : States
+event: Iuncov : UncoveredInstructions
+event: Q : Queries
+event: Qiv : QueriesInvalid
+event: Qv : QueriesValid
+event: Qtime : QueryTime
+events: Icov Forks Ireal Itime I UCdist Rtime States Iuncov Q Qiv Qv Qtime 
+ob=/home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/./klee-out-25/assembly.ll
+fn=divide_zero
+fl=/home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/divide_zero-1.c
+12 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+13 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+14 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+15 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+16 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+17 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+18 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+19 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+cfl=/home/kuan/klee/runtime/Intrinsic/klee_div_zero_check.c
+cfn=klee_div_zero_check
+calls=1 53 13
+19 5 4 1 0 0 4 0 0 0 0 2 2 0 24824 
+20 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+21 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+22 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+23 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+24 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+25 5 1 0 0 0 1 0 0 0 0 0 0 0 0 
+fn=main
+32 13 1 0 0 0 1 0 0 0 0 0 0 0 0 
+33 13 1 0 0 0 1 0 0 0 0 0 0 0 0 
+34 13 1 0 0 0 1 0 0 0 0 0 0 0 0 
+35 13 1 0 0 0 1 0 0 0 0 0 0 0 0 
+36 13 1 0 0 0 1 0 0 0 0 0 0 0 0 
+37 13 1 0 0 0 1 0 0 0 0 0 0 0 0 
+38 13 1 0 0 0 1 0 0 0 0 0 0 0 0 
+39 16 1 0 0 0 1 0 0 0 0 0 0 0 0 
+40 16 1 0 0 0 1 0 0 0 0 0 0 0 0 
+cfn=divide_zero
+calls=1 12 5
+40 16 18 1 0 0 18 0 0 0 0 2 2 0 24824 
+41 16 1 0 0 0 1 0 0 0 0 0 0 0 0 
+42 18 1 0 0 0 1 0 0 0 0 0 0 0 0 
+43 18 1 0 0 0 1 0 0 0 0 0 0 0 0 
+44 18 1 0 0 0 1 0 0 0 0 0 0 0 0 
+45 18 1 0 0 0 1 0 0 0 0 0 0 0 0 
+46 18 1 0 0 0 1 0 0 0 0 0 0 0 0 
+fn=klee_div_zero_check
+fl=/home/kuan/klee/runtime/Intrinsic/klee_div_zero_check.c
+53 13 1 0 0 0 1 0 0 0 0 0 0 0 0 
+54 13 1 1 0 0 1 0 0 0 0 2 2 0 24824 
+57 14 1 0 0 0 1 0 0 0 0 0 0 0 0 
+58 14 0 0 0 0 0 0 0 0 0 0 0 0 0 
+61 15 1 0 0 0 1 0 0 0 0 0 0 0 0 

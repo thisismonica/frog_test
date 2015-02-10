@@ -1,0 +1,17 @@
+K 10
+svn:ignore
+V 148
+Release+Asserts
+Debug+Asserts
+Release+Coverage
+Debug+Coverage
+Debug
+Release
+Makefile.config
+config.log
+config.status
+cscope.files
+cscope.out
+uclibc
+
+END

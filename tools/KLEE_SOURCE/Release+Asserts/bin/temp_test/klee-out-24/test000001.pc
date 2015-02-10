@@ -1,0 +1,6 @@
+array a1[24] : w32 -> w8 = symbolic
+(query [(Eq false
+            (Eq 43970400
+                N0:(ReadLSB w64 16 a1)))
+        (Ult (Add w64 18446603789085899056 N0) 1)]
+       false)

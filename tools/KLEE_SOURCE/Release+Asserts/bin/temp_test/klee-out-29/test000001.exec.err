@@ -1,0 +1,6 @@
+Error: external call with symbolic argument: klee_int_overflow_check
+File: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/integer_overflow.c
+Line: 5
+Stack: 
+	#0 00000018 in loop (a) at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/integer_overflow.c:5
+	#1 00000041 in main () at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/integer_overflow.c:17

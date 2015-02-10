@@ -1,0 +1,11 @@
+Error: memory error: invalid pointer: make_symbolic
+File: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list1.c
+Line: 29
+Stack: 
+	#0 00000075 in main () at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list1.c:29
+Info: 
+	address: 12370169555311111083
+	next: object at 140289848071584 of size 1536
+		MO3[1536] (no allocation info)
+	prev: object at 34553392 of size 4
+		MO10[4] allocated at main():  %0 = alloca i32

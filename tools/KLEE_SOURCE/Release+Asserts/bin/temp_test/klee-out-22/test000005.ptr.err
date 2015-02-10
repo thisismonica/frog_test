@@ -1,0 +1,24 @@
+Error: memory error: out of bound pointer
+File: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c
+Line: 17
+Stack: 
+	#0 00000043 in remove_from_list (head=40034976, node=40139056) at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:17
+	#1 00000089 in main () at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:40
+Info: 
+	address: (Add w64 16
+         (ReadLSB w64 0 U0:[(Add w32 7
+                                     N0:(Extract w32 0 (Add w64 18446744073669378632
+                                                                (ReadLSB w64 16 a1))))=(Read w8 15 a1),
+                            (Add w32 6 N0)=(Read w8 14 a1),
+                            (Add w32 5 N0)=(Read w8 13 a1),
+                            (Add w32 4 N0)=(Read w8 12 a1),
+                            (Add w32 3 N0)=(Read w8 11 a1),
+                            (Add w32 2 N0)=(Read w8 10 a1),
+                            (Add w32 1 N0)=(Read w8 9 a1),
+                            N0=(Read w8 8 a1)] @ const_arr1))
+	example: 40139073
+	range: [40139073, 40139080]
+	next: object at 40155520 of size 3
+		MO8[3] allocated at global:.str1
+	prev: object at 40139056 of size 24
+		MO20[24] allocated at main():  %5 = call noalias i8* @malloc(i64 24) nounwind, !dbg !78

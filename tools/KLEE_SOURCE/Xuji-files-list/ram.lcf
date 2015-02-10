@@ -1,0 +1,63 @@
+
+MEMORY {
+	exc :   org = 0x00000000, len = 0x3000
+	data1 : org = 0x00003000, len = 0x1000
+	data2 : org = 0x0000b000, len = 0x1000
+	ram :   org = 0x00020000, len = 0x500000
+}
+ 
+/* We use FORCEFILES so that the linker will not deadstrip the file reset.s. The function
+	reset would be deadstripped since it is not ever called by anything */
+
+/*FORCEACTIVE { gInterruptVectorTable, __reset } */
+
+SECTIONS {
+
+	.reset : {} > exc  
+	.init  : {} > ram
+	
+
+	GROUP : 
+	{
+		.text (TEXT): {}
+		.rodata (CONST) : 
+		{
+			*(.rdata)
+			*(.rodata)
+        }
+		.ctors : {}
+		.dtors : {}
+		extab : {}
+		extabindex : {}
+		.data : {}
+	} > ram	
+
+
+
+	GROUP : 
+	{
+	    .sdata :
+	    {
+	        *(.sdata)
+		}
+		.sbss : {} 
+    } > data1
+
+	GROUP : 
+	{
+	    .sdata2 : 
+		{
+		    *(.sdata2)
+		}
+		.sbss2 : {} 
+    } > data2 
+
+	GROUP : 
+	{
+	    .bss : {}
+		.PPC.EMB.sdata0 : {}
+		.PPC.EMB.sbss0 : {}
+    } > ram
+
+
+}

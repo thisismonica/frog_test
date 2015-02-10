@@ -1,0 +1,5 @@
+llvm-gcc -I /home/kuan/Downloads/Xuji-files-list --emit-llvm -c -g casc.c.test.c
+
+klee casc.c.test.o
+
+ktest-tool --write-ints klee-last/test000001.ktest 

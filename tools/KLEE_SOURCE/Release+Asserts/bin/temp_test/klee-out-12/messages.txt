@@ -1,0 +1,2 @@
+KLEE: ERROR: /home/qirong/Desktop/pointer1.c:5: memory error: out of bound pointer
+KLEE: NOTE: now ignoring this error at this location

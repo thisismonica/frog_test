@@ -1,0 +1,21 @@
+*****test case 1 *****
+ktest file : 'klee-last/test000001.ktest'
+args       : ['integer_overflow3.o']
+num objects: 1
+object    0: name: 'a1'
+object    0: size: 4
+object    0: data: -2147483648
+*****test case 2 *****
+ktest file : 'klee-last/test000002.ktest'
+args       : ['integer_overflow3.o']
+num objects: 1
+object    0: name: 'a1'
+object    0: size: 4
+object    0: data: 2147483647
+*****test case 3 *****
+ktest file : 'klee-last/test000003.ktest'
+args       : ['integer_overflow3.o']
+num objects: 1
+object    0: name: 'a1'
+object    0: size: 4
+object    0: data: 0

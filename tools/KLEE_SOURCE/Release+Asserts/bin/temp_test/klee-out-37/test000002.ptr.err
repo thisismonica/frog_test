@@ -1,0 +1,13 @@
+Error: memory error: out of bound pointer
+File: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list3.c
+Line: 16
+Stack: 
+	#0 00000037 in remove_from_list (head=53324032, node=53443200) at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list3.c:16
+	#1 00000090 in main () at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list3.c:40
+Info: 
+	address: (Add w64 8
+         (ReadLSB w64 16 a1))
+	example: 8
+	range: [0, 18446744073709551615]
+	next: object at 53323520 of size 8
+		MO11[8] allocated at main():  %a0 = alloca %struct.Node_t**

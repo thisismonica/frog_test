@@ -1,0 +1,2 @@
+KLEE: ERROR: /home/kuan/klee/runtime/Intrinsic/klee_div_zero_check.c:14: divide by zero
+KLEE: NOTE: now ignoring this error at this location

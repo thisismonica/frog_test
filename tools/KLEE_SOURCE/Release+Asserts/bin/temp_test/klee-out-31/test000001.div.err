@@ -1,0 +1,7 @@
+Error: divide by zero
+File: /home/qirong/Desktop/KLEE_SOURCE/runtime/Intrinsic/klee_div_zero_check.c
+Line: 26
+Stack: 
+	#0 00000074 in klee_int_overflow_check (z) at /home/qirong/Desktop/KLEE_SOURCE/runtime/Intrinsic/klee_div_zero_check.c:26
+	#1 00000021 in loop (a) at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/integer_overflow.c:5
+	#2 00000044 in main () at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/integer_overflow.c:17

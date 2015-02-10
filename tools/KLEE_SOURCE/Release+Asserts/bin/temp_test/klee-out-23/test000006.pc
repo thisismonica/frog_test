@@ -1,0 +1,44 @@
+array a1[24] : w32 -> w8 = symbolic
+(query [(Eq false
+            (Eq 27675824
+                N0:(ReadLSB w64 16 a1)))
+        (Eq false
+            (Ult (Add w64 18446603544129595696 N0) 1))
+        (Eq false
+            (Ult (Add w64 18446603544129595704 N0) 1))
+        (Eq false
+            (Ult (Add w64 18446603544129595712 N0) 1))
+        (Eq false
+            (Ult (Add w64 18446603544146950760 N0) 761))
+        (Eq false
+            (Ult (Add w64 18446603544146953320 N0) 1529))
+        (Eq false
+            (Ult (Add w64 18446603544146954856 N0) 1529))
+        (Ult (Add w64 18446744073681808024 N0) 1)
+        (Eq false
+            (Ult (Add w64 18446744073681875808
+                          N1:(ReadLSB w64 8 a1))
+                 17))
+        (Eq false
+            (Ult (Add w64 18446744073681875376 N1) 1))
+        (Eq false
+            (Ult (Add w64 18446744073681834016 N1) 1))
+        (Eq false
+            (Ult (Add w64 18446744073681808496 N1) 1))
+        (Eq false
+            (Ult (Add w64 18446744073681808064 N1) 1))
+        (Eq false
+            (Ult (Add w64 18446744073681808032 N1) 1))
+        (Eq false
+            (Ult (Add w64 18446603544146954864 N1) 1529))
+        (Eq false
+            (Ult (Add w64 18446603544146953328 N1) 1529))
+        (Eq false
+            (Ult (Add w64 18446603544146950768 N1) 761))
+        (Eq false
+            (Ult (Add w64 18446603544129595720 N1) 1))
+        (Eq false
+            (Ult (Add w64 18446603544129595712 N1) 1))
+        (Eq false
+            (Ult (Add w64 18446603544129595704 N1) 1))]
+       false)

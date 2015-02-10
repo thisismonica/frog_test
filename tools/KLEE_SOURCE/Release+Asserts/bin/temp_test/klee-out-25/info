@@ -1,0 +1,21 @@
+./klee divide_zero-1.o
+PID: 9244
+Started: 2014-02-27 14:08:05
+BEGIN searcher description
+<InterleavedSearcher> containing 2 searchers:
+RandomPathSearcher
+WeightedRandomSearcher::CoveringNew
+</InterleavedSearcher>
+END searcher description
+Finished: 2014-02-27 14:08:05
+Elapsed: 00:00:00
+KLEE: done: explored paths = 2
+KLEE: done: avg. constructs per query = 7
+KLEE: done: total queries = 2
+KLEE: done: valid queries = 0
+KLEE: done: invalid queries = 2
+KLEE: done: query cex = 2
+
+BLEE: done: total instructions = 33
+BLEE: done: completed paths = 2
+BLEE: done: generated tests = 2

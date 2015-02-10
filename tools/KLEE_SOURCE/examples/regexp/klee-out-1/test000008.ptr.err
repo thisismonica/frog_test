@@ -1,0 +1,18 @@
+Error: memory error: out of bound pointer
+File: /home/kuan/klee/examples/regexp/Regexp.c
+Line: 25
+Stack: 
+	#0 00000091 in matchhere (re=49852182, text=49894481) at /home/kuan/klee/examples/regexp/Regexp.c:25
+	#1 00000155 in matchhere (re=49852181, text=49894480) at /home/kuan/klee/examples/regexp/Regexp.c:30
+	#2 00000024 in matchstar (c, re=49852181, text=49894480) at /home/kuan/klee/examples/regexp/Regexp.c:16
+	#3 00000103 in matchhere (re=49852179, text=49894480) at /home/kuan/klee/examples/regexp/Regexp.c:26
+	#4 00000024 in matchstar (c, re=49852179, text=49894480) at /home/kuan/klee/examples/regexp/Regexp.c:16
+	#5 00000103 in matchhere (re=49852177, text=49894480) at /home/kuan/klee/examples/regexp/Regexp.c:26
+	#6 00000189 in match (re=49852176, text=49894480) at /home/kuan/klee/examples/regexp/Regexp.c:36
+	#7 00000235 in main () at /home/kuan/klee/examples/regexp/Regexp.c:59
+Info: 
+	address: 49852183
+	next: object at 49852208 of size 4
+		MO10[4] allocated at main():  %0 = alloca i32
+	prev: object at 49852176 of size 7
+		MO11[7] allocated at main():  %re = alloca [7 x i8]

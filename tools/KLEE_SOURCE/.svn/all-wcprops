@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/llvm-project/!svn/ver/185074/klee/trunk
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/llvm-project/!svn/ver/72205/klee/trunk/README.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/llvm-project/!svn/ver/162100/klee/trunk/Makefile
+END
+LICENSE.TXT
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/llvm-project/!svn/ver/72205/klee/trunk/LICENSE.TXT
+END
+configure
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/llvm-project/!svn/ver/161055/klee/trunk/configure
+END
+TODO.txt
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/llvm-project/!svn/ver/166582/klee/trunk/TODO.txt
+END
+Makefile.common
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/llvm-project/!svn/ver/161055/klee/trunk/Makefile.common
+END
+Makefile.config.in
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/llvm-project/!svn/ver/161055/klee/trunk/Makefile.config.in
+END
+Makefile.rules
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/llvm-project/!svn/ver/131584/klee/trunk/Makefile.rules
+END

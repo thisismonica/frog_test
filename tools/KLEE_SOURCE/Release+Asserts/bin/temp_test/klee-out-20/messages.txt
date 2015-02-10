@@ -1,0 +1,14 @@
+KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:16: memory error: object read only
+KLEE: NOTE: now ignoring this error at this location
+KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:16: memory error: out of bound pointer
+KLEE: NOTE: now ignoring this error at this location
+KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:17: memory error: out of bound pointer
+KLEE: NOTE: now ignoring this error at this location
+KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:17: memory error: object read only
+KLEE: NOTE: now ignoring this error at this location
+KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:17: memory error: out of bound pointer
+KLEE: NOTE: now ignoring this error at this location
+KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:19: memory error: out of bound pointer
+KLEE: NOTE: now ignoring this error at this location
+KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list2.c:17: memory error: out of bound pointer
+KLEE: NOTE: now ignoring this error at this location

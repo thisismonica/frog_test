@@ -1,0 +1,21 @@
+./klee pointer1.o
+PID: 19031
+Started: 2014-02-12 17:08:42
+BEGIN searcher description
+<InterleavedSearcher> containing 2 searchers:
+RandomPathSearcher
+WeightedRandomSearcher::CoveringNew
+</InterleavedSearcher>
+END searcher description
+Finished: 2014-02-12 17:08:42
+Elapsed: 00:00:00
+KLEE: done: explored paths = 1
+KLEE: done: avg. constructs per query = 1
+KLEE: done: total queries = 1
+KLEE: done: valid queries = 0
+KLEE: done: invalid queries = 1
+KLEE: done: query cex = 1
+
+BLEE: done: total instructions = 20
+BLEE: done: completed paths = 1
+BLEE: done: generated tests = 1
