@@ -376,8 +376,6 @@ for test in tests[:MAX_TESTS]:
 			
 			appendCode+='\n\treturn;\n}'
 		f.write(appendCode)
-	print "Replay test file :",replayFileName," Press any key to continue..."
-	raw_input()
 	
 	# Compile test file
 	replayOutput = target + '.replay'
