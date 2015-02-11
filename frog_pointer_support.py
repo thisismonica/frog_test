@@ -10,9 +10,14 @@ from support_frog import compute
 #####################################################
 # Pre Configuration
 #####################################################
-pathToKleeRoot = "/home/qirong/Desktop/KLEE_SOURCE"   # Path to klee root directory, for replay test cases
-kleeInclude = "tools/KLEE_SOURCE/include/klee"   # Path to include files, for llvm compilation
+
+# KLEE Related
+KLEE_INCLUDE= "tools/KLEE_SOURCE_2015/klee/include/klee"   # Path to include files, for llvm compilation
 KLEE_TIMEOUT = 10 
+KLEE_OPTIONS = [] #["--libc=uclibc"]#,"--posix-runtime" ]# KLEE C library Options
+KLEE_EXECUTABLE = "./tools/KLEE_SOURCE_2015/klee/Release+Asserts/bin/klee"
+
+# Test Cases 
 MAX_TESTS = 10
 
 #####################################################
@@ -183,7 +188,6 @@ if not os.path.isfile(testFileName):
 with open(testFileName, "ab") as f:
 	# Inital include files and declaration
 	appendCode = "\n#include \"klee.h\"\n"
-	appendCode += "#include \"ansi_prefix.PPCEABI.bare.h\"\n"
 	appendCode += "int main() {\n"
 
 	# Add symbolic functions
@@ -241,7 +245,7 @@ with open(testFileName, "ab") as f:
 
 print "\n6. LLVM linking"
 linkAddr = []
-linkAddr.append(kleeInclude)
+linkAddr.append(KLEE_INCLUDE)
 
 linkCmd = "llvm-gcc --emit-llvm -c -g"
 for addr in linkAddr:
@@ -271,7 +275,7 @@ print "\n7. KLEE run"
 if os.path.isfile(testFileObject):
 	
 	# Set klee timeout
-	proc = subprocess.Popen(["klee",testFileObject])
+	proc = subprocess.Popen([KLEE_EXECUTABLE]+KLEE_OPTIONS+[testFileObject])
 	start = time.time()
 	timeout = KLEE_TIMEOUT 
 	while proc.poll() is None:

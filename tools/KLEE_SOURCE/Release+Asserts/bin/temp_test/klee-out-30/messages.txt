@@ -1,2 +1,0 @@
-KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/integer_overflow.c:5: external call with symbolic argument: klee_int_overflow_check
-KLEE: NOTE: now ignoring this error at this location

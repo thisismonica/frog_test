@@ -1,6 +1,0 @@
-Error: memory error: object read only
-File: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list3.c
-Line: 17
-Stack: 
-	#0 00000045 in remove_from_list (head=33073216, node=33157728) at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list3.c:17
-	#1 00000090 in main () at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list3.c:40

@@ -1,2 +1,0 @@
-KLEE: ERROR: /home/qirong/Desktop/integer_overflow.c:9: external call with symbolic argument: printf
-KLEE: NOTE: now ignoring this error at this location

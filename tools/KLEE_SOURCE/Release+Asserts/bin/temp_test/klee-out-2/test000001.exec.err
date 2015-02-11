@@ -1,6 +1,0 @@
-Error: external call with symbolic argument: printf
-File: /home/qirong/Desktop/integer_overflow.c
-Line: 9
-Stack: 
-	#0 00000029 in loop (a) at /home/qirong/Desktop/integer_overflow.c:9
-	#1 00000055 in main () at /home/qirong/Desktop/integer_overflow.c:24

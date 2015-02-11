@@ -126,3 +126,8 @@ void print_calendar (FILE *fout, int year, int day_code, int leap_year) //functi
         day_code = ( day_code + days_in_month ) % 7;
     }
 }
+#include <stdio.h>
+int main(){
+	generate_calender(0);
+	return;
+}

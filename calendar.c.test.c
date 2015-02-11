@@ -126,3 +126,10 @@ void print_calendar (FILE *fout, int year, int day_code, int leap_year) //functi
         day_code = ( day_code + days_in_month ) % 7;
     }
 }
+#include "klee.h"
+int main() {
+	int a0;
+	klee_make_symbolic(&a0,sizeof(a0),"a0");
+	generate_calender(a0);
+	return;
+}

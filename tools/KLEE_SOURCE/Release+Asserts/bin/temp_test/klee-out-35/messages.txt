@@ -1,2 +1,0 @@
-KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/runtime/Intrinsic/klee_div_zero_check.c:26: integer overflow
-KLEE: NOTE: now ignoring this error at this location

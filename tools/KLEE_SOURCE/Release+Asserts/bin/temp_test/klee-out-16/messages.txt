@@ -1,2 +1,0 @@
-KLEE: ERROR: /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/link-list1.c:29: memory error: invalid pointer: make_symbolic
-KLEE: NOTE: now ignoring this error at this location

@@ -1,7 +1,0 @@
-Error: divide by zero
-File: /home/kuan/klee/runtime/Intrinsic/klee_div_zero_check.c
-Line: 14
-Stack: 
-	#0 00000057 in klee_div_zero_check (z) at /home/kuan/klee/runtime/Intrinsic/klee_div_zero_check.c:14
-	#1 00000019 in divide_zero (den) at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/divide_zero-1.c:5
-	#2 00000040 in main () at /home/qirong/Desktop/KLEE_SOURCE/Release+Asserts/bin/divide_zero-1.c:16
