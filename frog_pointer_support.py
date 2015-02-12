@@ -391,10 +391,14 @@ for test in tests[:MAX_TESTS]:
 		arg_symbols = {}
 		array_cnt = 0
 		for i,a in enumerate(argval):
-			# Example: int a[5];
+			# Example: int a[5] = {1,2,3,4,5};
 			if argIsPointer[i] and argType[i] != 'char':
+				s1 = str(argval) 
+				s1 = s1.replace('[','{')
+				s1 = s1.replace(']','}')
 				arg_symbol= "a"+str(array_cnt)
-				appendCode = appendCode +'\t'+argType[i]+' '+arg_symbol +'['+str(argSize[i])+'];\n'
+				appendCode = appendCode +'\t'+argType[i]+' '+arg_symbol +'['+str(argSize[i])+'] = '
+				appendCode += s1 +";\n"
 				array_cnt += 1
 				arg_symbols[i] = arg_symbol
 				

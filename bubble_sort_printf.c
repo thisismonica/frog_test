@@ -39,6 +39,10 @@ void bubble_srt( int a[])
     int i, j;
     int n = 5;
 
+    for(i=0; i<n; i++)
+        printf("%d ",a[i]);
+    printf("\n");
+
     for(i = 0; i < n; i++)         // Make a pass through the array for each element
     {
         for(j = 1; j < (n-i); j++) // Go through the array beginning to end
@@ -47,5 +51,10 @@ void bubble_srt( int a[])
                 SWAP(a[j-1],a[j]);
         }
     }
+
+    printf("After sorting: ");
+    for(i=0; i<n; i++)
+        printf("%d ",a[i]);
+    printf("\n");
 }
 

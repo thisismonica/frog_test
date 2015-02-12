@@ -24,3 +24,10 @@ int isLeapYear(int year)
         return 0;
     }
 }
+#include "klee.h"
+int main() {
+	int a0;
+	klee_make_symbolic(&a0,sizeof(a0),"a0");
+	int result=isLeapYear(a0);
+	return;
+}

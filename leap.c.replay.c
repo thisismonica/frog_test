@@ -24,3 +24,9 @@ int isLeapYear(int year)
         return 0;
     }
 }
+#include <stdio.h>
+int main(){
+	int returnval=isLeapYear(-5);
+    printf("Return value is %d\n",returnval);
+	return;
+}
