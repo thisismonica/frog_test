@@ -18,11 +18,12 @@ KLEE_OPTIONS = ["--allow-external-sym-calls"] #["--libc=uclibc"]#,"--posix-runti
 KLEE_EXECUTABLE = "./tools/KLEE_SOURCE_2015/klee/Release+Asserts/bin/klee"
 
 # Test Cases 
-KTEST = "./tools/KLEE_SOURCE_2015/klee/tools/ktest-tool/ktest-tool --write-ints"
+KTEST = "./tools/KLEE_SOURCE_2015/klee/tools/ktest-tool/ktest-tool "
 MAX_TESTS = 10
 
 # Type map for test case result unapck
 TYPE_DICT = {'char':'c','signed char':'b','unsigned char':'B','_Bool':'?','short':'h','unsigned short':'H','int':'i','unsigned int':'I','long':'l','unsigned long':'L','long long':'q','unsigned long long':'Q','float':'f','double':'d','char[]':'s','void *':'P'}
+CTYPE_DICT = {'int':'%d', 'unsigned int':'%u','double':'%f','float':'%f'}
 
 #####################################################
 # Function Definition Block
@@ -70,12 +71,30 @@ kleeFunc = []
 # 2 -Grap functions 
 ################################
 
+# Define function Regex
+re_func_str = r'^\s*(unsigned\s+|signed\s+)?(void|int|char|short|long|float|double)\s+(\w+)\s*\((.*)\)\s*$'
+'''
+\s*
+(unsigned\s+|signed\s+)?                      # group(1): unsigned/signed
+(void|int|char|short|long|float|double)  # group(2): return type
+\s+
+(\w+)                                    # group(3): function name
+\s*
+\(
+([^)]*)                                    # group(4) args - total cop out
+\)
+\s*
+'
+'''
+re_func = re.compile(re_func_str)
+
 with open(target, 'r') as f:
 
 	# Extract all functions using RegExp
 	print "\n2. Extract all functions"
 	for line in f:
-		reg = re.match(r'^\w+\s+\w+\s*\(.*\)\s*$', line, re.M|re.I)
+		#reg = re.match(r'^\w+\s+\w+\s*\(.*\)\s*$', line, re.M|re.I)
+		reg = re_func.match(line.strip())
 		if reg:
 			func.append(reg.group())
 			print line[0:-1] 
@@ -89,8 +108,8 @@ for item in func:
 	reg = re.search(r'(\(\s*(.*)\s*\))', item, re.M|re.I)
 	if reg:
 		#print reg.group(2)+" - "+item[0:-1]
-		if reg.group(2).strip().lower() != "void" and reg.group(2)!="":
-			kleeFunc.append(item[0:-1].strip())
+		if reg.group(1).strip().lower() != "void" and reg.group(1)!="":
+			kleeFunc.append(item.strip())
 			#print item[0:-1]
 
 # If there is no function to test, exit
@@ -110,9 +129,9 @@ while(not isNumber(i) or int(i)<0 or int(i)>len(kleeFunc)):
 
 targetFunc = kleeFunc[int(i)]
 
-argType = []
 funcType = ""
 funcName = ""
+argType = []
 argName = []
 argIsPointer = []
 argSize = []
@@ -121,15 +140,18 @@ argSize = []
 # 4 - func type, name & arg type
 ################################
 print "\n4. Extracting func type, name and argument"
-reg = re.search(r'(\w+)\s+(.*)\(\s*(.*)\s*\)\s*$', kleeFunc[int(i)], re.M|re.I)
+#reg = re.search(r'(\w+)\s+(.*)\(\s*(.*)\s*\)\s*$', kleeFunc[int(i)], re.M|re.I)
+reg = re_func.match( kleeFunc[int(i)])
 p_pointer_var1 = re.compile(r'^\*.*')
 p_pointer_var2 = re.compile(r'.*\[\]$')
 p_pointer_type = re.compile(r'.*\*$')
 
 if reg:
-	funcType = reg.group(1).strip()
-	funcName = reg.group(2).strip()
-	for pair in reg.group(3).split(','):
+	if reg.group(1) : #unsigned/signed
+		funcType = reg.group(1).strip() + " "
+	funcType += reg.group(2).strip()
+	funcName = reg.group(3).strip()
+	for pair in reg.group(4).split(','):
 		argArr = pair.strip().split(' ')
 		if len(argArr) == 2:
 
@@ -163,14 +185,18 @@ if reg:
 				argName.append(argArr[1].strip())
 
 		# Case 5: pointer * in the middle
-		elif len(argTypeArr)==3 and argArr[1]=="*":
+		elif len(argArr)==3 and argArr[1]=="*":
 			argType.append(argArr[0].strip())
 			argIsPointer.append(True)
 			argName.append(argArr[2].strip())
 
+		# Case 6: long data type definition, Example: unsigned int a
 		else:
-			argTypeStr = argArr[0]+argArr[1]
+			argTypeStr = " ".join( argArr[:-1] )
 			argType.append(argTypeStr.strip())
+			argIsPointer.append(False)
+			argName.append(argArr[-1].strip())
+
 argSize = [ 1 for i in range(len(argType))]
 
 print funcType
@@ -330,7 +356,6 @@ M = []
 for test in tests[:MAX_TESTS]:
 
 	# Display test case values, write to temp file klee_tests
-	
 	subprocess.call(KTEST+" "+test+' >'+temp_tests, shell=True)
 	print "***Test case "+str(testnum)+" for function: ", targetFunc					
 	testnum += 1
@@ -344,32 +369,57 @@ for test in tests[:MAX_TESTS]:
 			# If match one parameter value
 			if a:
 				try:
-					# Unpack argument string according to size
+					index = int( a[0][0])
+					raw_val = a[0][1]
+				except IndexError, ValueError:
+					print "Error: Invalid test case format, Check if ", KTEST, "correct"
+					sys.exit(1)
+				else:
+					# Array: Unpack argument string according to size
 					if argIsPointer[argcount]:
-						arg = a[0][1]
+						arg = raw_val 
 						length = len(arg)/argSize[argcount]
 						arg_array= []
 						unpack_type = TYPE_DICT[ argType[argcount] ]
 
-						for j in range(size):
-							val = struct.unpack(unpack_type, arg[j*length:(j+1)*length] )[0]
-							arg_array.append(val)
-						argstr = argName[ int(a[0][0]) ] + "="
-
+						try:
+							for j in range(size):
+								val = struct.unpack(unpack_type, arg[j*length:(j+1)*length] )[0]
+								arg_array.append(val)
+						except struct.error:
+							print "Error: Invalid argument type, unable to unpack from binary format. Check ",KTEST
+							sys.exit(1)
+						
 						# Display test cases
+						display = argName[ index ] + "="
+						
+						# Special array: string
 						if argType[argcount] == 'char':
 							arg_array = "".join(arg_array)
-						print argstr, arg_array
-						argval.append(arg_array)
+						print display , arg_array
+						
+						# Add test cases for replay
+						argval.append( str(arg_array) )
 						argcount +=1
-					else:							
-						argstr = argName[ int(a[0][0]) ]+" = " +a[0][1]
-						print argstr
-						argval.append(a[0][1])
-						argcount += 1
-				except IndexError:
-					print "Invalid test case input"
 
+					# Single Variable
+					else:							
+						# Unpack argument according to type
+						try:
+							unpack_type = TYPE_DICT[ argType[argcount] ] 
+							val = struct.unpack(unpack_type, raw_val )[0] 
+						except struct.error:
+							print "Error: Invalid argument type, unable to unpack from binary format. Check ",KTEST
+							sys.exit(1)
+						
+						# Display test cases
+						argstr = argName[index]+" = " + str(val)
+						print argstr
+						
+						# Add test cases for replay
+						argval.append( str(val) )
+						argcount += 1
+				
 	# Judge if argument number valid
 	if argcount != len(argName):
 		print "ERROR: Invalid argument number of only ",argcount
@@ -409,7 +459,6 @@ for test in tests[:MAX_TESTS]:
 		for i,a in enumerate(argval):
 
 			# For string type argument : join list 
-			# FIXME
 			if argIsPointer[i] and argType[i] == 'char':
 				a = '"'+a+'"'
 			elif argIsPointer[i] and argType[i] != 'char' and i in arg_symbols:
@@ -422,8 +471,8 @@ for test in tests[:MAX_TESTS]:
 		if funcType.lower() =='void':
 			appendCode+='\treturn;\n}'
 		else:
-			#FIXME print result is not only integer
-			appendCode+=r'    printf("Return value is %d\n",returnval);'
+			return_type = CTYPE_DICT[funcType.lower()] if funcType.lower() in CTYPE_DICT else '%d'
+			appendCode+=r'    printf("Return value is '+return_type + r'\n",returnval);'
 			
 			appendCode+='\n\treturn;\n}'
 		f.write(appendCode)

@@ -106,9 +106,9 @@ int get_day_code (int year)
 {
     int day_code;
     int x1, x2, x3;
-    x1 = (year - 1.)/ 4.0;
-    x2 = (year - 1.)/ 100.;
-    x3 = (year - 1.)/ 400.;
+    x1 = (year - 1)/4;
+    x2 = (year - 1)/100;
+    x3 = (year - 1)/400;
     day_code = (year + x1 - x2 + x3) %7;
     return day_code;
 }
