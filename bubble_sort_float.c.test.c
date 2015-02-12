@@ -49,3 +49,11 @@ void bubble_srt( float a[])
 
 }
 
+
+#include "klee.h"
+int main() {
+	float a0[5];
+	klee_make_symbolic(&a0,sizeof(a0),"a0");
+	bubble_srt(a0);
+	return;
+}

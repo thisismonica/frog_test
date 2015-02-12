@@ -49,3 +49,10 @@ void bubble_srt( float a[])
 
 }
 
+
+#include <stdio.h>
+int main(){
+	float a0[5];
+	bubble_srt(a0);
+	return;
+}

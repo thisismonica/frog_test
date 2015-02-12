@@ -25,31 +25,6 @@ void generate_calender(int year)
 
     leap_year = get_leap_year (year);
 
-    print_calendar(fout, year, day_code, leap_year);
-}
-
-int get_day_code (int year)
-{
-    int day_code;
-    int x1, x2, x3;
-    x1 = (year - 1.)/ 4.0;
-    x2 = (year - 1.)/ 100.;
-    x3 = (year - 1.)/ 400.;
-    day_code = (year + x1 - x2 + x3) %7;
-    return day_code;
-}
-
-int get_leap_year (int year)
-{
-
-//if((year% 4) == 0 );
-    if(year% 4==0 && year%100 != 0 || year%400==0)
-        return TRUE;
-    else return FALSE;
-}
-
-void print_calendar (FILE *fout, int year, int day_code, int leap_year) //function header
-{
     int  days_in_month,     /* number of days in month currently
                                                      being printed */
          day,       /* counter for day of month */
@@ -126,6 +101,27 @@ void print_calendar (FILE *fout, int year, int day_code, int leap_year) //functi
         day_code = ( day_code + days_in_month ) % 7;
     }
 }
+
+int get_day_code (int year)
+{
+    int day_code;
+    int x1, x2, x3;
+    x1 = (year - 1.)/ 4.0;
+    x2 = (year - 1.)/ 100.;
+    x3 = (year - 1.)/ 400.;
+    day_code = (year + x1 - x2 + x3) %7;
+    return day_code;
+}
+
+int get_leap_year (int year)
+{
+
+//if((year% 4) == 0 );
+    if(year% 4==0 && year%100 != 0 || year%400==0)
+        return TRUE;
+    else return FALSE;
+}
+
 #include "klee.h"
 int main() {
 	int a0;

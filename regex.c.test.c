@@ -35,7 +35,7 @@ static int matchhere(char *re, char *text)
 }
 
 /*
- * Match function: return 0 if matched else 1
+ * Match function: return 1 if matched else 0
 */
 int match(char *re)
 {
@@ -58,10 +58,9 @@ int match(char *re)
 
 
 #include "klee.h"
-#include "ansi_prefix.PPCEABI.bare.h"
 int main() {
 	char a0[5];
-	klee_make_symbolic(a0,sizeof(a0),"a0");
+	klee_make_symbolic(&a0,sizeof(a0),"a0");
 	klee_assume(a0[4]=='\0');
 	int result=match(a0);
 	return;

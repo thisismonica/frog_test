@@ -3,8 +3,8 @@ import subprocess
 import re
 import glob
 import os
-import threading
 import time 
+import struct
 from support_frog import compute
 
 #####################################################
@@ -18,7 +18,11 @@ KLEE_OPTIONS = [] #["--libc=uclibc"]#,"--posix-runtime" ]# KLEE C library Option
 KLEE_EXECUTABLE = "./tools/KLEE_SOURCE_2015/klee/Release+Asserts/bin/klee"
 
 # Test Cases 
+KTEST = "./tools/KLEE_SOURCE_2015/klee/tools/ktest-tool/ktest-tool --write-ints"
 MAX_TESTS = 10
+
+# Type map for test case result unapck
+TYPE_DICT = {'char':'c','signed char':'b','unsigned char':'B','_Bool':'?','short':'h','unsigned short':'H','int':'i','unsigned int':'I','long':'l','unsigned long':'L','long long':'q','unsigned long long':'Q','float':'f','double':'d','char[]':'s','void *':'P'}
 
 #####################################################
 # Function Definition Block
@@ -111,6 +115,7 @@ funcType = ""
 funcName = ""
 argName = []
 argIsPointer = []
+argSize = []
 
 ################################
 # 4 - func type, name & arg type
@@ -129,6 +134,7 @@ if reg:
 		if len(argArr) == 2:
 
 			# Check if argument is pointer type
+			# FIXME: Messy code
 				# Case 1: variable begin with *
 			if p_pointer_var1.match(argArr[1]):
 				argType.append(argArr[0].strip())
@@ -165,6 +171,7 @@ if reg:
 		else:
 			argTypeStr = argArr[0]+argArr[1]
 			argType.append(argTypeStr.strip())
+argSize = [ 1 for i in range(len(argType))]
 
 print funcType
 print funcName
@@ -208,10 +215,11 @@ with open(testFileName, "ab") as f:
 					if size >0:
 						break
 			appendCode += "\t"+atype+" "+symbol+"["+str(size)+"];\n"
+			argSize[i] = size
 
 			# Symbolize 
 			# Example: klee_make_symbolic(a0, sizeof(a0), "a0")
-			appendCode += "\tklee_make_symbolic("+symbol+",sizeof("+symbol+"),\""+symbol+"\");\n"
+			appendCode += "\tklee_make_symbolic(&"+symbol+",sizeof("+symbol+"),\""+symbol+"\");\n"
 
 			# Add string NULL terminater
 			# Example: klee_assume(a0[size-1]=='\0');
@@ -322,7 +330,8 @@ M = []
 for test in tests[:MAX_TESTS]:
 
 	# Display test case values, write to temp file klee_tests
-	subprocess.call('ktest-tool --write-ints '+test+' >'+temp_tests, shell=True)
+	
+	subprocess.call(KTEST+" "+test+' >'+temp_tests, shell=True)
 	print "***Test case "+str(testnum)+" for function: ", targetFunc					
 	testnum += 1
 	argcount = 0
@@ -335,11 +344,30 @@ for test in tests[:MAX_TESTS]:
 			# If match one parameter value
 			if a:
 				try:
-					argstr = argName[ int(a[0][0]) ]+" = " +a[0][1]
-					print argstr
-					argval.append(a[0][1])
-					argcount += 1
-				except Exception:
+					# Unpack argument string according to size
+					if argIsPointer[argcount]:
+						arg = a[0][1]
+						length = len(arg)/argSize[argcount]
+						arg_array= []
+						unpack_type = TYPE_DICT[ argType[argcount] ]
+
+						for j in range(size):
+							val = struct.unpack(unpack_type, arg[j*length:(j+1)*length] )[0]
+							arg_array.append(val)
+						argstr = argName[ int(a[0][0]) ] + "="
+
+						# Display test cases
+						if argType[argcount] == 'char':
+							arg_array = "".join(arg_array)
+						print argstr, arg_array
+						argval.append(arg_array)
+						argcount +=1
+					else:							
+						argstr = argName[ int(a[0][0]) ]+" = " +a[0][1]
+						print argstr
+						argval.append(a[0][1])
+						argcount += 1
+				except IndexError:
 					print "Invalid test case input"
 
 	# Judge if argument number valid
@@ -358,16 +386,31 @@ for test in tests[:MAX_TESTS]:
 	with open(replayFileName, 'ab') as f:
 		appendCode = "\n#include <stdio.h>\n"
 		appendCode += "int main(){\n"
+
+		# Definition for array type argument
+		arg_symbols = {}
+		array_cnt = 0
+		for i,a in enumerate(argval):
+			# Example: int a[5];
+			if argIsPointer[i] and argType[i] != 'char':
+				arg_symbol= "a"+str(array_cnt)
+				appendCode = appendCode +'\t'+argType[i]+' '+arg_symbol +'['+str(argSize[i])+'];\n'
+				array_cnt += 1
+				arg_symbols[i] = arg_symbol
+				
 		if funcType.lower()=='void':
 			appendCode+='\t'+funcName+'('
 		else:
 			appendCode+='\t'+funcType+' returnval='+funcName+'('
 		for i,a in enumerate(argval):
 
-			# For string type argument, change single quote to double quote
-			if argIsPointer[i]:
-				a = re.sub("\'",'\"',a)
-				
+			# For string type argument : join list 
+			# FIXME
+			if argIsPointer[i] and argType[i] == 'char':
+				a = '"'+a+'"'
+			elif argIsPointer[i] and argType[i] != 'char' and i in arg_symbols:
+				a = arg_symbols[i]
+
 			appendCode+=a
 			if i< len(argval)-1:
 				appendCode+=', '

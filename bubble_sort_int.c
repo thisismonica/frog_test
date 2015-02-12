@@ -11,7 +11,7 @@ it actually did something ;)
 ***************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#define SWAP(a,b)   { float t; t=a; a=b; b=t; }  // Macro for swapping
+#define SWAP(a,b)   { int t; t=a; a=b; b=t; }  // Macro for swapping
 
 /***************************************************************
                       The Bubble Sort Itself
@@ -33,7 +33,7 @@ Two is the number of elements in the array(int n). This number
 is important because, as I said earlier, the array is to be sifted
 through once for each element in the array.
 ***************************************************************/
-void bubble_srt( float a[])
+void bubble_srt( int a[])
 {
     int i, j;
     int n = 5;
