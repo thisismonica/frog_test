@@ -14,7 +14,7 @@ from support_frog import compute
 # KLEE Related
 KLEE_INCLUDE= "tools/KLEE_SOURCE_2015/klee/include/klee"   # Path to include files, for llvm compilation
 KLEE_TIMEOUT = 10 
-KLEE_OPTIONS = [] #["--libc=uclibc"]#,"--posix-runtime" ]# KLEE C library Options
+KLEE_OPTIONS = ["--allow-external-sym-calls"] #["--libc=uclibc"]#,"--posix-runtime" ]# KLEE C library Options
 KLEE_EXECUTABLE = "./tools/KLEE_SOURCE_2015/klee/Release+Asserts/bin/klee"
 
 # Test Cases 
