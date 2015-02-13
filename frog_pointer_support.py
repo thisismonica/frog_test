@@ -13,7 +13,7 @@ from support_frog import compute
 
 # KLEE Related
 KLEE_INCLUDE= "tools/KLEE_SOURCE_2015/klee/include/klee"   # Path to include files, for llvm compilation
-KLEE_TIMEOUT = 10 
+KLEE_TIMEOUT = 100  # seconds
 KLEE_OPTIONS = ["--allow-external-sym-calls"] #["--libc=uclibc"]#,"--posix-runtime" ]# KLEE C library Options
 KLEE_EXECUTABLE = "./tools/KLEE_SOURCE_2015/klee/Release+Asserts/bin/klee"
 
@@ -284,6 +284,7 @@ linkAddr.append(KLEE_INCLUDE)
 linkCmd = "llvm-gcc --emit-llvm -c -g"
 for addr in linkAddr:
 	linkCmd += " -I"+addr
+linkCmd += " -o "+testFileObject
 linkCmd += " "+testFileName
 
 # Delete old object
@@ -311,21 +312,26 @@ if os.path.isfile(testFileObject):
 	# Set klee timeout
 	proc = subprocess.Popen([KLEE_EXECUTABLE]+KLEE_OPTIONS+[testFileObject])
 	start = time.time()
+	isTimeout = False
 	timeout = KLEE_TIMEOUT 
 	while proc.poll() is None:
 		time.sleep(0.1)
 		now = time.time()
 		if (now-start) > timeout:
 		        print "KLEE timeout..."
-			returncode = proc.returncode 
+			isTimeout = True
 			proc.kill()
 	returncode = proc.returncode
 
 	#returncode = subprocess.call("klee "+testFileObject, shell=True)
-	print "return code: "+str(returncode)
-	if returncode != 0:
-		print "Klee failed."
-		sys.exit() 
+	if isTimeout:
+		print "KLEE alreayd run for: ",KLEE_TIMEOUT," secs" 
+
+	else:
+		print "return code: "+str(returncode)
+		if returncode != 0:
+			print "Klee failed."
+			sys.exit() 
 else:
 	print "Object file does not exist."
 raw_input()
