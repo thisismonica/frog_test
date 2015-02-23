@@ -24,7 +24,7 @@ static int matchstar(int c, char *re, char *text)
 static int matchhere(char *re, char *text)
 {
     if (re[0] == '\0')
-        return 0;
+        return 1;   //Bug!
     if (re[1] == '*')
         return matchstar(re[0], re+2, text);
     if (re[0] == '$' && re[1]=='\0')
@@ -54,14 +54,4 @@ int match(char *re)
     }
     while (*text++ != '\0');
     return 0;
-}
-
-
-#include "klee.h"
-int main() {
-	char a0[5];
-	klee_make_symbolic(&a0,sizeof(a0),"a0");
-	klee_assume(a0[4]=='\0');
-	int result=match(a0);
-	return;
 }
